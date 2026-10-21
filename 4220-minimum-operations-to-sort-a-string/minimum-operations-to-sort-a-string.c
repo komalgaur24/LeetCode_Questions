@@ -1,0 +1,42 @@
+#include <string.h>
+#include <stdbool.h>
+
+int minOperations(char* s) {
+    int n = strlen(s);
+    bool flag = true;
+
+    for(int i = 0; i < n; i++) {
+        if(i > 0 && s[i] < s[i-1]) {
+            flag = false;
+            break;
+        }
+    }
+
+    if(flag) {
+        return 0;
+    }
+    if(n == 2) {
+        return -1;
+    }
+
+    char minChar = 'z';
+    char maxChar = 'a';
+
+    for(int i = 0; i < n; i++) {
+        char ch = s[i];
+        if (ch < minChar) minChar = ch;
+        if (ch > maxChar) maxChar = ch;
+    }
+
+    if(minChar == s[0] || maxChar == s[n-1]) {
+        return 1;
+    }
+    
+    for(int i = 1; i < n - 1; i++) {
+        if(s[i] == minChar || s[i] == maxChar) {
+            return 2;
+        }
+    }
+    
+    return 3;
+}
